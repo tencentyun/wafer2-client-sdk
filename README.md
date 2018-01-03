@@ -4,23 +4,22 @@
 [![Coverage Status](https://coveralls.io/repos/github/tencentyun/wafer-client-sdk/badge.svg?branch=master)](https://coveralls.io/github/tencentyun/wafer-client-sdk?branch=master)
 [![License](https://img.shields.io/github/license/tencentyun/wafer-client-sdk.svg)](LICENSE)
 
-本 项目是 [Wafer](https://github.com/tencentyun/wafer-solution) 的组成部分，为小程序客户端开发提供 SDK 支持会话服务和信道服务。
+本 项目是 [Wafer2](https://github.com/tencentyun/wafer) 的组成部分，为小程序客户端开发提供 SDK 支持会话服务和信道服务。
 
 ## SDK 获取与安装
 
-解决方案[客户端 Demo](https://github.com/tencentyun/wafer-client-demo) 已经集成并使用最新版的 SDK，需要快速了解的可以从 Demo 开始。
+[解决方案 Demo](https://github.com/tencentyun/wafer2-quickstart) 已经集成并使用最新版的 SDK，需要快速了解的可以从 Demo 开始。
 
 如果需要单独开始，本 SDK 已经发布为 bower 模块，可以直接安装到小程序目录中。
 
 ```sh
-npm install -g bower
-bower install qcloud-weapp-client-sdk
+npm install wafer2-client-sdk
 ```
 
 安装之后，就可以使用 `require` 引用 SDK 模块：
 
 ```js
-var qcloud = require('./bower_components/qcloud-weapp-client-sdk/index.js');
+var qcloud = require('./node_modules/wafer2-client-sdk/index.js');
 ```
 
 ## 会话服务
