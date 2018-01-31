@@ -10,6 +10,7 @@ var authHeader = function() {
 
 var exports = module.exports = {
     login: login.login,
+    setLoginOption: login.setLoginOption,
     setLoginUrl: login.setLoginUrl,
     LoginError: login.LoginError,
 
