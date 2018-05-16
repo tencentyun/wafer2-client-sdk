@@ -12,9 +12,9 @@ var exports = module.exports = {
     login: login.login,
     setLoginUrl: login.setLoginUrl,
     LoginError: login.LoginError,
-
+    requestLogin: login.requestLogin,
     clearSession: Session.clear,
-
+    Session: Session,
     request: request.request,
     RequestError: request.RequestError,
     authHeader: authHeader,
