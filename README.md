@@ -28,6 +28,50 @@ var qcloud = require('./node_modules/wafer2-client-sdk/index.js');
 
 ### 登录
 
+由于微信的 `wx.getUserInfo` 不再弹窗授权，得修改为 button 弹窗获取用户信息。为此我们提供了一个新的 API：`qcloud.requestLogin`，此函数接受了 `code, encryptedData, iv` 以向后台提供用户信息，具体示例如下：
+
+```
+// wxml
+<button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="doLogin">获取用户信息</button>
+
+// js
+doLogin: function(options) {
+    var that = this;
+
+    wx.login({
+        success: function (loginResult) {
+          var loginParams = {
+            code: loginResult.code,
+            encryptedData: options.encryptedData,
+            iv: options.iv,
+          }
+          qcloud.requestLogin({
+            loginParams,
+            success() {
+              util.showSuccess('登录成功');
+
+              that.setData({
+                userInfo: options.userInfo,
+                logged: true
+              })
+            },
+            fail(error) {
+              util.showModel('登录失败', error)
+              console.log('登录失败', error)
+            }
+          });
+        },
+        fail: function (loginError) {
+          util.showModel('登录失败', loginError)
+          console.log('登录失败', loginError)
+        },
+      });
+    }
+```
+
+> 注意，以下接口已经被微信废弃，但为了兼容暂时没有去除，请使用上文所说的按钮获取用户信息样式
+> 微信官方公告：https://developers.weixin.qq.com/blogdetail?action=get_post_info&lang=zh_CN&token=83045995&docid=0000a26e1aca6012e896a517556c01
+
 登录可以在小程序和服务器之间建立会话，服务器由此可以获取到用户的标识和信息。
 
 ```js
