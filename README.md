@@ -35,15 +35,15 @@ var qcloud = require('./node_modules/wafer2-client-sdk/index.js');
 <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="doLogin">获取用户信息</button>
 
 // js
-doLogin: function(options) {
+doLogin: function(e) {
     var that = this;
 
     wx.login({
         success: function (loginResult) {
           var loginParams = {
             code: loginResult.code,
-            encryptedData: options.encryptedData,
-            iv: options.iv,
+            encryptedData: e.detail.encryptedData,
+            iv: e.detail.iv,
           }
           qcloud.requestLogin({
             loginParams,
