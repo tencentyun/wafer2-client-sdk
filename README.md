@@ -94,6 +94,8 @@ qcloud.login({
 
 登录成功后，可以获取到当前微信用户的基本信息。
 
+登陆所需的其他设置可以通过 [setLoginOption](#setloginoption) 进行修改。
+
 ### 请求
 
 如果希望小程序的网络请求包含会话，登录之后使用 [request](#request) 方法进行网络请求即可。
@@ -176,6 +178,20 @@ qcloud.setLoginUrl(loginUrl);
 |参数         |类型           |说明
 |-------------|---------------|--------------
 |loginUrl     |string         |会话服务登录地址
+
+### setLoginOption
+修改登录所需的其他设置，例如：`method`。
+
+#### 语法
+```js
+qcloud.setLoginOption(key, value);
+```
+
+#### 参数
+|参数         |类型           |说明
+|-------------|---------------|--------------
+|key          |string         |设置名称
+|value        |string         |设置值
 
 ### login
 登录，建立微信小程序会话。
