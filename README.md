@@ -51,7 +51,7 @@ doLogin: function(e) {
               util.showSuccess('登录成功');
 
               that.setData({
-                userInfo: options.userInfo,
+                userInfo: e.detail.userInfo,
                 logged: true
               })
             },
