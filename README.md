@@ -30,43 +30,44 @@ var qcloud = require('./node_modules/wafer2-client-sdk/index.js');
 
 由于微信的 `wx.getUserInfo` 不再弹窗授权，得修改为 button 弹窗获取用户信息。为此我们提供了一个新的 API：`qcloud.requestLogin`，此函数接受了 `code, encryptedData, iv` 以向后台提供用户信息，具体示例如下：
 
+**注意 2.0 版本以上的 Client SDK 需配合 1.4.x 以上版本的 Node.js SDK 或者，2.2.x 以上版本的 PHP SDK。**
+
 ```
 // wxml
 <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="doLogin">获取用户信息</button>
 
 // js
-doLogin: function(e) {
-    var that = this;
+doLogin: function () {
+    const session = qcloud.Session.get()
 
-    wx.login({
-        success: function (loginResult) {
-          var loginParams = {
-            code: loginResult.code,
-            encryptedData: e.detail.encryptedData,
-            iv: e.detail.iv,
-          }
-          qcloud.requestLogin({
-            loginParams,
-            success() {
-              util.showSuccess('登录成功');
-
-              that.setData({
-                userInfo: e.detail.userInfo,
-                logged: true
-              })
+    if (session) {
+        // 第二次登录
+        // 或者本地已经有登录态
+        // 可使用本函数更新登录态
+        qcloud.loginWithCode({
+            success: res => {
+                this.setData({ userInfo: res, logged: true })
+                util.showSuccess('登录成功')
             },
-            fail(error) {
-              util.showModel('登录失败', error)
-              console.log('登录失败', error)
+            fail: err => {
+                console.error(err)
+                util.showModel('登录错误', err.message)
             }
-          });
-        },
-        fail: function (loginError) {
-          util.showModel('登录失败', loginError)
-          console.log('登录失败', loginError)
-        },
-      });
+        })
+    } else {
+        // 首次登录
+        qcloud.login({
+            success: res => {
+                this.setData({ userInfo: res, logged: true })
+                util.showSuccess('登录成功')
+            },
+            fail: err => {
+                console.error(err)
+                util.showModel('登录错误', err.message)
+            }
+        })
     }
+}
 ```
 
 > 注意，以下接口已经被微信废弃，但为了兼容暂时没有去除，请使用上文所说的按钮获取用户信息样式
