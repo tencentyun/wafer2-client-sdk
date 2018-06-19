@@ -28,7 +28,7 @@ var qcloud = require('./node_modules/wafer2-client-sdk/index.js');
 
 ### 登录
 
-由于微信的 `wx.getUserInfo` 不再弹窗授权，得修改为 button 弹窗获取用户信息。为此我们提供了一个新的 API：`qcloud.requestLogin`，此函数接受了 `code, encryptedData, iv` 以向后台提供用户信息，具体示例如下：
+由于微信的 `wx.getUserInfo` 不再弹窗授权，得修改为 button 弹窗获取用户信息。为此我们提供了新的 API 实现，具体可参考：https://github.com/tencentyun/wafer2-quickstart/issues/10 的说明
 
 **注意 2.0 版本以上的 Client SDK 需配合 1.4.x 以上版本的 Node.js SDK 或者，2.2.x 以上版本的 PHP SDK。**
 
@@ -70,6 +70,12 @@ doLogin: function () {
 }
 ```
 
+本 SDK 需要配合云端 SDK 才能提供完整会话服务。通过 [setLoginUrl](#setLoginUrl) 设置登录地址，云服务器在该地址上使用云端 SDK 处理登录请求。
+
+> `setLoginUrl` 方法设置登录地址之后会一直有效，因此你可以在微信小程序启动时设置。
+
+登录成功后，可以获取到当前微信用户的基本信息。
+
 > 注意，以下接口已经被微信废弃，但为了兼容暂时没有去除，请使用上文所说的按钮获取用户信息样式
 > 微信官方公告：https://developers.weixin.qq.com/blogdetail?action=get_post_info&lang=zh_CN&token=83045995&docid=0000a26e1aca6012e896a517556c01
 
@@ -89,11 +95,6 @@ qcloud.login({
     }
 });
 ```
-本 SDK 需要配合云端 SDK 才能提供完整会话服务。通过 [setLoginUrl](#setLoginUrl) 设置登录地址，云服务器在该地址上使用云端 SDK 处理登录请求。
-
-> `setLoginUrl` 方法设置登录地址之后会一直有效，因此你可以在微信小程序启动时设置。
-
-登录成功后，可以获取到当前微信用户的基本信息。
 
 ### 请求
 
